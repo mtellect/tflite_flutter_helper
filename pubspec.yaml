@@ -18,7 +18,8 @@ dependencies:
   tuple: ^2.0.0
   camera: ^0.10.5+9  
   # ffi: ^2.0.1
-  image: ^3.0.2
+  # image: ^3.0.2
+  image: ^4.0.17  
 
 dependency_overrides:
   ffi: ^1.0.0

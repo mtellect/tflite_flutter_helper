@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:image/image.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/src/image/base_image_container.dart';
 import 'package:tflite_flutter_helper/src/image/image_conversions.dart';
 import 'package:tflite_flutter_helper/src/tensorbuffer/tensorbuffer.dart';
@@ -24,10 +23,11 @@ class ImageContainer extends BaseImageContainer {
 
   @override
   ColorSpaceType get colorSpaceType {
-    int len = _image.data.length;
+    final data = _image.data?.toUint8List().toList() ?? [];
+    int len = data.length;
     bool isGrayscale = true;
-    for (int i = (len / 4).floor(); i < _image.data.length; i++) {
-      if (_image.data[i] != 0) {
+    for (int i = (len / 4).floor(); i < data.length; i++) {
+      if (data[i] != 0) {
         isGrayscale = false;
         break;
       }
@@ -53,8 +53,8 @@ class ImageContainer extends BaseImageContainer {
   Image get image => _image;
 
   @override
-  CameraImage get mediaImage => throw UnsupportedError(
-      'Converting from Image to CameraImage is unsupported');
+  CameraImage get mediaImage =>
+      throw UnsupportedError('Converting from Image to CameraImage is unsupported');
 
   @override
   int get width => _image.width;
