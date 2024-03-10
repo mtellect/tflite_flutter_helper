@@ -15,7 +15,7 @@ class Classifier {
 
   late TensorBuffer _outputBuffer;
 
-  TfLiteType _outputType = TfLiteType.uint8;
+  int _outputType = TfLiteType.kTfLiteUInt8;
 
   final String _modelFileName = 'yamnet.tflite';
   final String _labelFileName = 'assets/yamnet_class_map.csv';
@@ -42,7 +42,7 @@ class Classifier {
       print(interpreter.getOutputTensors());
       _inputShape = interpreter.getInputTensor(0).shape;
       _outputShape = interpreter.getOutputTensor(0).shape;
-      _outputType = interpreter.getOutputTensor(0).type;
+      _outputType = interpreter.getOutputTensor(0).type.index;
 
       _outputBuffer = TensorBuffer.createFixedSize(_outputShape, _outputType);
     } catch (e) {
